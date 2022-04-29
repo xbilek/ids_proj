@@ -254,9 +254,29 @@ VALUES ('10005','1240');
 
 INSERT INTO "rezervace" ("id", "datum_vytvoreni", "datum_platnosti_od", "datum_platnosti_do", "zamestnanec_id", "ctenar_id")
 VALUES ('8001',TO_DATE('2022-01-15', 'yyyy/mm/dd'),TO_DATE('2022-01-29', 'yyyy/mm/dd'),TO_DATE('2020-02-13', 'yyyy/mm/dd'),'0001','2225') ;
+INSERT INTO "rezervace" ("id", "datum_vytvoreni", "datum_platnosti_od", "datum_platnosti_do", "zamestnanec_id", "ctenar_id")
+VALUES ('8002',TO_DATE('2020-02-10', 'yyyy/mm/dd'),TO_DATE('2020-02-10', 'yyyy/mm/dd'),TO_DATE('2020-04-10', 'yyyy/mm/dd'),'0002','2222') ;
+INSERT INTO "rezervace" ("id", "datum_vytvoreni", "datum_platnosti_od", "datum_platnosti_do", "zamestnanec_id", "ctenar_id")
+VALUES ('8003',TO_DATE('2020-04-09', 'yyyy/mm/dd'),TO_DATE('2020-04-15', 'yyyy/mm/dd'),TO_DATE('2020-06-15', 'yyyy/mm/dd'),'0003','2223') ;
+INSERT INTO "rezervace" ("id", "datum_vytvoreni", "datum_platnosti_od", "datum_platnosti_do", "zamestnanec_id", "ctenar_id")
+VALUES ('8004',TO_DATE('2020-05-08', 'yyyy/mm/dd'),TO_DATE('2020-05-30', 'yyyy/mm/dd'),TO_DATE('2020-07-30', 'yyyy/mm/dd'),'0004','2224') ;
+INSERT INTO "rezervace" ("id", "datum_vytvoreni", "datum_platnosti_od", "datum_platnosti_do", "zamestnanec_id", "ctenar_id")
+VALUES ('8005',TO_DATE('2020-05-10', 'yyyy/mm/dd'),TO_DATE('2020-05-30', 'yyyy/mm/dd'),TO_DATE('2020-07-30', 'yyyy/mm/dd'),'0004','2224') ;
+INSERT INTO "rezervace" ("id", "datum_vytvoreni", "datum_platnosti_od", "datum_platnosti_do", "zamestnanec_id", "ctenar_id")
+VALUES ('8006',TO_DATE('2020-05-10', 'yyyy/mm/dd'),TO_DATE('2020-05-30', 'yyyy/mm/dd'),TO_DATE('2020-07-30', 'yyyy/mm/dd'),'0004','2225') ;
 
 INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
 VALUES ('9999','8001');
+INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
+VALUES ('9998','8002');
+INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
+VALUES ('9997','8003');
+INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
+VALUES ('9996','8004');
+INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
+VALUES ('9999','8005');
+INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
+VALUES ('10000','8006');
 
 
 SELECT * FROM "titul";
