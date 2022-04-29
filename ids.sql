@@ -140,11 +140,11 @@ VALUES ('0004','Peter','Brown',TO_DATE('1975-11-12', 'yyyy/mm/dd'),'peterzav@ina
 INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
 VALUES ('0005','Jenda','Janega',TO_DATE('1976-11-12', 'yyyy/mm/dd'),'jenda@inacseznam.cz','952963741',TO_DATE('1995-02-10', 'yyyy/mm/dd'),TO_DATE('2000-05-01', 'yyyy/mm/dd'),'uzp','1691 1252 1234 1414');
 INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
-VALUES ('0006','Rick','Sanchez',TO_DATE('1950-11-12', 'yyyy/mm/dd'),'citadela@inacseznam.cz','952963551',TO_DATE('2000-02-10', 'yyyy/mm/dd'),'alianz','1691 1250 1734 1415');
+VALUES ('0006','Rick','Sanchez',TO_DATE('1950-11-12', 'yyyy/mm/dd'),'citadela@inacseznam.cz','952963551',TO_DATE('2000-02-10', 'yyyy/mm/dd'), NULL,'alianz','1691 1250 1734 1415');
 INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
-VALUES ('0007','Elon','Tusk',TO_DATE('1970-11-12', 'yyyy/mm/dd'),'tusk@twitter.com','952113551',TO_DATE('2010-02-10', 'yyyy/mm/dd'),'zpmv','9691 1251 1434 1415');
+VALUES ('0007','Elon','Tusk',TO_DATE('1970-11-12', 'yyyy/mm/dd'),'tusk@twitter.com','952113551',TO_DATE('2010-02-10', 'yyyy/mm/dd'), NULL, 'zpmv','9691 1251 1434 1415');
 INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
-VALUES ('0008','Ales','Bejr',TO_DATE('1975-10-12', 'yyyy/mm/dd'),'silenec@bejr.com','912313551',TO_DATE('2011-02-10', 'yyyy/mm/dd'),'nepojistitelny','9691 1250 1434 4415');
+VALUES ('0008','Ales','Bejr',TO_DATE('1975-10-12', 'yyyy/mm/dd'),'silenec@bejr.com','912313551',TO_DATE('2011-02-10', 'yyyy/mm/dd'), NULL, 'nepojistitelny','9691 1250 1434 4415');
 
 
 INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
@@ -191,7 +191,7 @@ VALUES ('9997' ,'5/10',TO_DATE('2018-01-01', 'yyyy/mm/dd'),'309','1116');
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
 VALUES ('9998','7/10',TO_DATE('2019-02-10', 'yyyy/mm/dd'),'359','1116');
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
-VALUES ('9999' ,'8/10',TO_DATE('2020-10-01', 'yyyy/mm/dd'),'300','1117');
+VALUES ('10005' ,'8/10',TO_DATE('2020-10-01', 'yyyy/mm/dd'),'300','1117');
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
 VALUES ('10000','8/10',TO_DATE('2020-10-01', 'yyyy/mm/dd'),'300','1117');
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
@@ -243,8 +243,8 @@ INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
 VALUES ('9999','8001');
 
 
-SELECT * FROM "titul"
-SELECT * FROM "kniha"
+SELECT * FROM "titul";
+SELECT * FROM "kniha";
 SELECT * FROM "titul" JOIN "kniha" ON "titul"."id" = "kniha"."titul_id";
 
 
