@@ -228,6 +228,14 @@ INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "
 VALUES ('1235',TO_DATE('2020-08-03', 'yyyy/mm/dd'),TO_DATE('2020-10-03', 'yyyy/mm/dd'),TO_DATE('2020-10-02', 'yyyy/mm/dd'),'0002','2223');
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
 VALUES ('1236',TO_DATE('2020-02-15', 'yyyy/mm/dd'),TO_DATE('2020-04-15', 'yyyy/mm/dd'),TO_DATE('2020-03-15', 'yyyy/mm/dd'),'0003','2224');
+INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
+VALUES ('1237',TO_DATE('2020-02-20', 'yyyy/mm/dd'),TO_DATE('2020-04-16', 'yyyy/mm/dd'),TO_DATE('2020-03-15', 'yyyy/mm/dd'),'0001','2224');
+INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
+VALUES ('1238',TO_DATE('2019-02-20', 'yyyy/mm/dd'),TO_DATE('2022-04-16', 'yyyy/mm/dd'),TO_DATE('2021-03-15', 'yyyy/mm/dd'),'0005','2229');
+INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
+VALUES ('1239',TO_DATE('2020-02-21', 'yyyy/mm/dd'),TO_DATE('2020-04-17', 'yyyy/mm/dd'),TO_DATE('2020-03-15', 'yyyy/mm/dd'),'0004','2227');
+INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
+VALUES ('1240',TO_DATE('2015-02-20', 'yyyy/mm/dd'),TO_DATE('2020-04-16', 'yyyy/mm/dd'),TO_DATE('2020-03-25', 'yyyy/mm/dd'),'0001','2225');
 
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
 VALUES ('9999','1234');
@@ -235,6 +243,14 @@ INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
 VALUES ('9990','1235');
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
 VALUES ('9991','1236');
+INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
+VALUES ('10000','1237');
+INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
+VALUES ('10001','1238');
+INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
+VALUES ('10002','1239');
+INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
+VALUES ('10005','1240');
 
 INSERT INTO "rezervace" ("id", "datum_vytvoreni", "datum_platnosti_od", "datum_platnosti_do", "zamestnanec_id", "ctenar_id")
 VALUES ('8001',TO_DATE('2022-01-15', 'yyyy/mm/dd'),TO_DATE('2022-01-29', 'yyyy/mm/dd'),TO_DATE('2020-02-13', 'yyyy/mm/dd'),'0001','2225') ;
