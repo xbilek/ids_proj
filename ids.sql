@@ -1,3 +1,5 @@
+
+----------------DROP EVERYTHING----------------
 DROP TABLE  "kniha_rezervace";
 DROP TABLE  "kniha_vypujcka";
 DROP TABLE  "rezervace";
@@ -7,7 +9,9 @@ DROP TABLE  "titul";
 DROP TABLE "zamestnanec";
 DROP TABLE "ctenar";
 DROP SEQUENCE "kniha_sekvence";
+DROP MATERIALIZED VIEW "ctenar_vypujcka_counter";
 
+--------CREATE TABLES------------------
 CREATE TABLE "titul"
 (
     "id" INT PRIMARY KEY,
@@ -128,18 +132,22 @@ CREATE OR REPLACE TRIGGER kniha_sekvence_trigger
     END;
 ----------------------- TRIGGER -------------------------
 -- Netrivialni TRIGGER no.1
--- Pri vlozeni insertu s vypujckou, bez itemu "vratit do" se automaticky vypocita jako dva mesice od zapujceni
+-- Pri vlozeni insertu vypujcky, kde datum vypujceni neni definovanno hodnota se automaticky nastavi na dnesni datum
 --
 CREATE OR REPLACE TRIGGER "prazdne_datum_vypujceni"
     BEFORE INSERT OR UPDATE OF "datum_vypujceni" ON "vypujcka"
     FOR EACH ROW
-    WHEN("datum_vypujceni" IS NULL)
+
+    WHEN(NEW."datum_vypujceni" IS NULL)
 BEGIN
+    --SELECT trunc(sysdate) INTO "datum_vypujceni" FROM dual ;
     :NEW."datum_vypujceni" := CURRENT_DATE;
+
 end;
+
 ----------------------------Procedure------------------------------
 --vypise pocet vypujcek k danemu ID knihy
---
+--procedure no.1
 CREATE OR REPLACE  PROCEDURE "vypujcene_knihy"
     ("kniha_nazev" IN VARCHAR)
 AS
@@ -180,12 +188,12 @@ BEGIN
             );
     end;
 end;
-    ---ukazka zpusteni procedury
+---- ukazka spusteni procedure no.1
 BEGIN
     dbms_output.put_line('Hello Reader!');
     "vypujcene_knihy"(9996);
 end;
----procedura
+--- procedure no.2
 --- vypise pocet knih vlastnenych knihovnou a prumerny pocet vypujcek na jednu knihu
 CREATE OR REPLACE  PROCEDURE "prumerny_pocet_vypujceni"
 AS
@@ -210,17 +218,18 @@ EXCEPTION WHEN ZERO_DIVIDE THEN
 
 	END;
 end;
+---- ukazka spusteni procedure no.2
 BEGIN
     "prumerny_pocet_vypujceni";
 end;
 
---- EXPLAIN PLAN
+--- EXPLAIN PLAN TODO
 --- kteri uzivatele s emailem @seznam.cz maji vice nez jednu vypujcku
 
 
-
-
-
+-------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------INSERTS----------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
 INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
 VALUES ('0001','Alex','Syrovy',TO_DATE('1972-07-30', 'yyyy/mm/dd'),'xmarek75@vutbr.cz','123456789',TO_DATE('1992-07-30', 'yyyy/mm/dd'),TO_DATE('2022-04-03', 'yyyy/mm/dd'),'vzp','6595 8596 7485 9658');
 INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
@@ -377,13 +386,12 @@ VALUES ('10000','8006');
 
 ---DEMONSTRACE TRIGGER---
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
-VALUES ('1241',TO_DATE('2015-02-20', 'yyyy/mm/dd'),NULL,TO_DATE('2020-03-25', 'yyyy/mm/dd'),'0001','2225');
+VALUES ('1241',NULL,NULL,TO_DATE('2020-03-25', 'yyyy/mm/dd'),'0001','2225');
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
 VALUES ('9999','1241');
-
 SELECT * FROM "vypujcka";
+--------------------------------------------------------------------------------------------------------
 
-SELECT "kniha"."id" FROM "kniha" JOIN "titul" ON "titul"."id" = "kniha"."titul_id" WHERE "nazev" = 'Kytice';
 
 --------------------------- MATERIALIZED VIEW ----------------------------------
 
