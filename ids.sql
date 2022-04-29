@@ -137,6 +137,15 @@ INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email",
 VALUES ('0003','Jan','Novak',TO_DATE('1974-01-30', 'yyyy/mm/dd'),'jannovak@seznam.cz','123489126',TO_DATE('1985-03-09', 'yyyy/mm/dd'),NULL,'vzp','5565 3695 3333 1478');
 INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
 VALUES ('0004','Peter','Brown',TO_DATE('1975-11-12', 'yyyy/mm/dd'),'peterzav@inacseznam.cz','852963741',TO_DATE('1995-02-14', 'yyyy/mm/dd'),TO_DATE('1995-05-01', 'yyyy/mm/dd'),'uzp','3691 1254 1234 1414');
+INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
+VALUES ('0005','Jenda','Janega',TO_DATE('1976-11-12', 'yyyy/mm/dd'),'jenda@inacseznam.cz','952963741',TO_DATE('1995-02-10', 'yyyy/mm/dd'),TO_DATE('2000-05-01', 'yyyy/mm/dd'),'uzp','1691 1252 1234 1414');
+INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
+VALUES ('0006','Rick','Sanchez',TO_DATE('1950-11-12', 'yyyy/mm/dd'),'citadela@inacseznam.cz','952963551',TO_DATE('2000-02-10', 'yyyy/mm/dd'),'alianz','1691 1250 1734 1415');
+INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
+VALUES ('0007','Elon','Tusk',TO_DATE('1970-11-12', 'yyyy/mm/dd'),'tusk@twitter.com','952113551',TO_DATE('2010-02-10', 'yyyy/mm/dd'),'zpmv','9691 1251 1434 1415');
+INSERT INTO "zamestnanec" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_nastupu", "datum_vypovedi", "pojistovna", "platebni udaje")
+VALUES ('0008','Ales','Bejr',TO_DATE('1975-10-12', 'yyyy/mm/dd'),'silenec@bejr.com','912313551',TO_DATE('2011-02-10', 'yyyy/mm/dd'),'nepojistitelny','9691 1250 1434 4415');
+
 
 INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
 VALUES ('1111','Harry Potter 1','J. K. Rowling','Alfonz Mucha','Albatros','2001','fantasy','epika');
@@ -169,7 +178,14 @@ INSERT INTO "ctenar" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "tel
 VALUES ('2224','Pavel','Velky',TO_DATE('2002-09-15', 'yyyy/mm/dd'),'hodneneco@seznam.cz','123789789',TO_DATE('2012-09-05', 'yyyy/mm/dd'),TO_DATE('2022-05-09', 'yyyy/mm/dd'));
 INSERT INTO "ctenar" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_registrace", "platnost_prukazu_do")
 VALUES ('2225','Josef','Siroky',TO_DATE('2003-10-12', 'yyyy/mm/dd'),'nicneco@seznam.cz','123159159',TO_DATE('2016-11-02', 'yyyy/mm/dd'),TO_DATE('2022-02-02', 'yyyy/mm/dd'));
-
+INSERT INTO "ctenar" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_registrace", "platnost_prukazu_do")
+VALUES ('2226','Morty','Smith',TO_DATE('2001-10-12', 'yyyy/mm/dd'),'morty@ohjeez.cz','125559159',TO_DATE('2016-11-05', 'yyyy/mm/dd'),TO_DATE('2022-02-03', 'yyyy/mm/dd'));
+INSERT INTO "ctenar" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_registrace", "platnost_prukazu_do")
+VALUES ('2227','Adam','Novak',TO_DATE('2001-01-01', 'yyyy/mm/dd'),'adam@seznam.cz','123153339',TO_DATE('2016-05-02', 'yyyy/mm/dd'),TO_DATE('2022-01-02', 'yyyy/mm/dd'));
+INSERT INTO "ctenar" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_registrace", "platnost_prukazu_do")
+VALUES ('2228','Josef','Uzky',TO_DATE('2003-10-12', 'yyyy/mm/dd'),'pepik@seznam.cz','121159159',TO_DATE('2017-11-02', 'yyyy/mm/dd'),TO_DATE('2023-02-02', 'yyyy/mm/dd'));
+INSERT INTO "ctenar" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_registrace", "platnost_prukazu_do")
+VALUES ('2229','Josef','Lada',TO_DATE('1920-10-12', 'yyyy/mm/dd'),'bajky@seznam.cz','723159159',TO_DATE('2018-11-02', 'yyyy/mm/dd'),TO_DATE('2023-01-01', 'yyyy/mm/dd'));
 
 
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
