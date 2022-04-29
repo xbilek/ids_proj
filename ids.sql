@@ -155,6 +155,16 @@ INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "ro
 VALUES ('1113','Maly princ',' Antoine de Saint-Exupéry','Petr Svestka','IDontKnow','2000','filozoficka pohadka','epika');
 INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
 VALUES ('1114','Farma zvirat','George Orwell','Honza Tresnicka','WhoKnows','2010','autopicky roman','epika');
+INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
+VALUES ('1115','1948','George Orwell','Honza Tresnicka','WhoKnows','1999','roman','epika');
+INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
+VALUES ('1116','Staré pověsti české','Alois Jirásek','Věnceslav Černý','Albatros','2003','povesti','epika');
+INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
+VALUES ('1117','Oliver Twist','Charles Dickens','Milan Jaroš','Odeon','1966','roman','epika');
+INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
+VALUES ('1118','Kytice','Karel Jaromír Erben','Jiří Arbe Miňovský','Omega','2014','povesti','epika');
+INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "rok_vydani", "zanr", "druh")
+VALUES ('1119','Hamlet','William Shakespeare','Josef Šíma','Československý spisovatel','1981','Divadelni hry','epika');
 
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
 VALUES (9999,'poskozeny obal',TO_DATE('2015-10-03', 'yyyy/mm/dd'),'199','1111');
@@ -168,6 +178,30 @@ INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
 VALUES (NULL ,'super',TO_DATE('2013-05-01', 'yyyy/mm/dd'),'259','1114');
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
 VALUES (NULL ,'nic moc',TO_DATE('2013-05-01', 'yyyy/mm/dd'),'259','1114');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('9993' ,'8/10',TO_DATE('2020-05-05', 'yyyy/mm/dd'),'239','1114');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('9994','10/10',TO_DATE('2022-03-03', 'yyyy/mm/dd'),'269','1114');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('9995' ,'9/10',TO_DATE('2021-04-01', 'yyyy/mm/dd'),'329','1115');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('9996','8/10',TO_DATE('2020-03-18', 'yyyy/mm/dd'),'309','1115');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('9997' ,'5/10',TO_DATE('2018-01-01', 'yyyy/mm/dd'),'309','1116');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('9998','7/10',TO_DATE('2019-02-10', 'yyyy/mm/dd'),'359','1116');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('9999' ,'8/10',TO_DATE('2020-10-01', 'yyyy/mm/dd'),'300','1117');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('10000','8/10',TO_DATE('2020-10-01', 'yyyy/mm/dd'),'300','1117');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('10001' ,'9/10',TO_DATE('2022-02-01', 'yyyy/mm/dd'),'380','1118');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('10002','10/10',TO_DATE('2022-02-01', 'yyyy/mm/dd'),'410','1118');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('10003' ,'9/10',TO_DATE('2010-02-01', 'yyyy/mm/dd'),'589','1119');
+INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
+VALUES ('10004','10/10',TO_DATE('2010-08-01', 'yyyy/mm/dd'),'649','1119');
 
 
 INSERT INTO "ctenar" ("id", "jmeno", "prijmeni", "datum_narozeni", "email", "telefon", "datum_registrace", "platnost_prukazu_do")
