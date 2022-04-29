@@ -126,6 +126,98 @@ CREATE OR REPLACE TRIGGER kniha_sekvence_trigger
     BEGIN
         :new."id" := "kniha_sekvence".nextval;
     END;
+----------------------- TRIGGER -------------------------
+-- Netrivialni TRIGGER no.1
+-- Pri vlozeni insertu s vypujckou, bez itemu "vratit do" se automaticky vypocita jako dva mesice od zapujceni
+--
+CREATE OR REPLACE TRIGGER "prazdne_datum_vypujceni"
+    BEFORE INSERT OR UPDATE OF "datum_vypujceni" ON "vypujcka"
+    FOR EACH ROW
+    WHEN("datum_vypujceni" IS NULL)
+BEGIN
+    :NEW."datum_vypujceni" := CURRENT_DATE;
+end;
+----------------------------Procedure------------------------------
+--vypise pocet vypujcek k danemu ID knihy
+--
+CREATE OR REPLACE  PROCEDURE "vypujcene_knihy"
+    ("kniha_nazev" IN VARCHAR)
+AS
+    "vsechny_vypujcky" NUMBER;
+    "vybrane_vypujcky" NUMBER;
+    "kniha_id" "kniha"."id"%TYPE;
+    "vybrana_kniha_id" "kniha"."id"%TYPE;
+    CURSOR "cursor_knihy" IS SELECT "kniha_id" FROM "kniha_vypujcka";
+BEGIN
+    SELECT COUNT(*) INTO "vsechny_vypujcky" FROM "vypujcka";
+        --users     = vypucjka
+        --language  = kniha
+        --name      = nazev
+    "vybrane_vypujcky" := 0;
+
+    SELECT "id" INTO "vybrana_kniha_id" FROM "kniha" WHERE "id" = "kniha_nazev";
+
+    OPEN "cursor_knihy";
+    LOOP
+        FETCH "cursor_knihy" INTO "kniha_id";
+
+        EXIT WHEN "cursor_knihy"%NOTFOUND;
+
+        IF "kniha_id" = "vybrana_kniha_id" THEN
+            "vybrane_vypujcky" := "vybrane_vypujcky" + 1;
+        end if;
+    end loop;
+    CLOSE "cursor_knihy";
+
+    DBMS_OUTPUT.PUT_LINE(
+        'kniha s ID '|| "kniha_nazev" || ' byla vypujcena ' || "vybrane_vypujcky"
+        || 'krat z celkovych vypujcek: ' || "vsechny_vypujcky"
+        );
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE(
+            'kniha' || "kniha_nazev" || 'nenalezena'
+            );
+    end;
+end;
+    ---ukazka zpusteni procedury
+BEGIN
+    dbms_output.put_line('Hello Reader!');
+    "vypujcene_knihy"(9996);
+end;
+---procedura
+--- vypise pocet knih vlastnenych knihovnou a prumerny pocet vypujcek na jednu knihu
+CREATE OR REPLACE  PROCEDURE "prumerny_pocet_vypujceni"
+AS
+    "pocet_knih" NUMBER;
+    "pocet_vypujcek" NUMBER;
+    "prumerny_pocet_vypujceni" DECIMAL(10,2);
+BEGIN
+    SELECT COUNT (*) INTO "pocet_knih" FROM "kniha";
+    SELECT COUNT(*) INTO "pocet_vypujcek" FROM "vypujcka";
+    --"pocet_knih" := 0;
+    "prumerny_pocet_vypujceni" := "pocet_vypujcek" / "pocet_knih";
+
+    DBMS_OUTPUT.PUT_LINE(
+        'V knihovne je '||"pocet_knih"||' knih a probehlo '|| "pocet_vypujcek"||' vypujcek to znamena ze jedna kniha byla vypujcena prumerne '|| "prumerny_pocet_vypujceni"
+        || ' krat.'
+        );
+EXCEPTION WHEN ZERO_DIVIDE THEN
+	BEGIN
+		IF "pocet_knih" = 0 THEN
+			DBMS_OUTPUT.put_line('V knihovne nejsou zadne knihy :(');
+		END IF;
+
+	END;
+end;
+BEGIN
+    "prumerny_pocet_vypujceni";
+end;
+
+--- EXPLAIN PLAN
+--- kteri uzivatele s emailem @seznam.cz maji vice nez jednu vypujcku
+
+
 
 
 
@@ -167,7 +259,7 @@ INSERT INTO "titul" ("id", "nazev", "autor", "ilustrator", "nakladatelstvi", "ro
 VALUES ('1119','Hamlet','William Shakespeare','Josef Šíma','Československý spisovatel','1981','Divadelni hry','epika');
 
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
-VALUES (9999,'poskozeny obal',TO_DATE('2015-10-03', 'yyyy/mm/dd'),'199','1111');
+VALUES ('9999','poskozeny obal',TO_DATE('2015-10-03', 'yyyy/mm/dd'),'199','1111');
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
 VALUES ('9990','perfektni',TO_DATE('2020-08-05', 'yyyy/mm/dd'),'499','1112');
 INSERT INTO "kniha" ("id", "stav", "datum_porizeni", "cena", "titul_id")
@@ -225,7 +317,7 @@ VALUES ('2229','Josef','Lada',TO_DATE('1920-10-12', 'yyyy/mm/dd'),'bajky@seznam.
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
 VALUES ('1234',TO_DATE('2020-07-30', 'yyyy/mm/dd'),TO_DATE('2020-10-30', 'yyyy/mm/dd'),TO_DATE('2020-09-30', 'yyyy/mm/dd'),'0001','2222');
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
-VALUES ('1235',TO_DATE('2020-08-03', 'yyyy/mm/dd'),TO_DATE('2020-10-03', 'yyyy/mm/dd'),TO_DATE('2020-10-02', 'yyyy/mm/dd'),'0002','2223');
+VALUES ('1235',TO_DATE('2020-08-03', 'yyyy/mm/dd'),TO_DATE('2020-10-03', 'yyyy/mm/dd'),NULL,'0002','2223');
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
 VALUES ('1236',TO_DATE('2020-02-15', 'yyyy/mm/dd'),TO_DATE('2020-04-15', 'yyyy/mm/dd'),TO_DATE('2020-03-15', 'yyyy/mm/dd'),'0003','2224');
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
@@ -238,9 +330,9 @@ INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "
 VALUES ('1240',TO_DATE('2015-02-20', 'yyyy/mm/dd'),TO_DATE('2020-04-16', 'yyyy/mm/dd'),TO_DATE('2020-03-25', 'yyyy/mm/dd'),'0001','2225');
 
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
-VALUES ('9999','1234');
+VALUES ('9996','1234');
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
-VALUES ('9990','1235');
+VALUES ('9996','1235');
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
 VALUES ('9991','1236');
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
@@ -279,8 +371,49 @@ INSERT INTO "kniha_rezervace" ("kniha_id", "rezervace_id")
 VALUES ('10000','8006');
 
 
-SELECT * FROM "titul";
-SELECT * FROM "kniha";
-SELECT * FROM "titul" JOIN "kniha" ON "titul"."id" = "kniha"."titul_id";
+--SELECT * FROM "titul";
+--SELECT * FROM "kniha";
+--SELECT * FROM "titul" JOIN "kniha" ON "titul"."id" = "kniha"."titul_id";
+
+---DEMONSTRACE TRIGGER---
+INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
+VALUES ('1241',TO_DATE('2015-02-20', 'yyyy/mm/dd'),NULL,TO_DATE('2020-03-25', 'yyyy/mm/dd'),'0001','2225');
+INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
+VALUES ('9999','1241');
+
+SELECT * FROM "vypujcka";
+
+SELECT "kniha"."id" FROM "kniha" JOIN "titul" ON "titul"."id" = "kniha"."titul_id" WHERE "nazev" = 'Kytice';
+
+--------------------------- MATERIALIZED VIEW ----------------------------------
+
+-- Materializovaný pohled na všechny uživatele a počet jejich vypujcek.
+CREATE MATERIALIZED VIEW "ctenar_vypujcka_counter" AS
+SELECT
+    "c"."id", "c"."jmeno", "c"."prijmeni" , "c"."email"
+FROM "ctenar" "c"
+LEFT JOIN "vypujcka" "v" ON "v"."ctenar_id" = "c"."id"
+GROUP BY "c"."id", "c"."jmeno", "c"."prijmeni","c"."email";
+
+-- vypis materializovaneho pohledu
+SELECT * FROM "ctenar_vypujcka_counter";
+
+-- aktualizace dat, ktere jsou v materializovanem pohledu
+UPDATE "vypujcka" SET "ctenar_id" = 2 WHERE "id"= 1;
+-- data v materializovanem pohhledu se neaktualizuji
+SELECT * FROM "ctenar_vypujcka_counter";
+
+--------------------------- PRIVILEGES ---------------------------
+
+GRANT ALL ON "ctenar" TO xmarek75;
+GRANT ALL ON "zamestnanec" TO xmarek75;
+GRANT ALL ON "vypujcka" TO xmarek75;
+GRANT ALL ON "kniha" TO xmarek75;
+GRANT ALL ON "kniha_vypujcka" TO xmarek75;
+GRANT ALL ON "rezervace" TO xmarek75;
+GRANT ALL ON "kniha_rezervace" TO xmarek75;
+GRANT ALL ON "titul" TO xmarek75;
 
 
+GRANT EXECUTE ON "vypujcene_knihy" TO xmarek75;
+GRANT EXECUTE ON "prumerny_pocet_vypujceni" TO xmarek75;
