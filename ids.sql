@@ -1,5 +1,5 @@
-
-----------------DROP EVERYTHING----------------
+-----------------------------------------------
+------------------DROP TABLES------------------
 DROP TABLE  "kniha_rezervace";
 DROP TABLE  "kniha_vypujcka";
 DROP TABLE  "rezervace";
@@ -10,9 +10,9 @@ DROP TABLE "zamestnanec";
 DROP TABLE "ctenar";
 DROP SEQUENCE "kniha_sekvence";
 DROP MATERIALIZED VIEW "ctenar_vypujcka_counter";
-DROP INDEX "Orwell";
-
---------CREATE TABLES------------------
+DROP INDEX "autor_titul";
+-----------------------------------------------
+----------------CREATE TABLES------------------
 CREATE TABLE "titul"
 (
     "id" INT PRIMARY KEY,
@@ -131,7 +131,8 @@ CREATE OR REPLACE TRIGGER kniha_sekvence_trigger
     BEGIN
         :new."id" := "kniha_sekvence".nextval;
     END;
------------------------ TRIGGER -------------------------
+-----------------------------------------------
+------------------TRIGGERS---------------------
 -- Netrivialni TRIGGER no.1
 -- Pri vlozeni insertu vypujcky, kde datum vypujceni neni definovanno hodnota se automaticky nastavi na dnesni datum
 --
@@ -146,7 +147,8 @@ BEGIN
 
 end;
 
-----------------------------Procedure------------------------------
+-----------------------------------------------
+------------------PROCEDURES-------------------
 --vypise pocet vypujcek k danemu ID knihy
 --procedure no.1
 CREATE OR REPLACE  PROCEDURE "vypujcene_knihy"
@@ -224,7 +226,8 @@ BEGIN
     "prumerny_pocet_vypujceni";
 end;
 
---- EXPLAIN PLAN
+-----------------------------------------------
+-----------------EXPLAIN PLAN------------------
 --- vypise nazev titulu a k tomu pocet knih
 --- od autora George Orwella
  EXPLAIN PLAN FOR
@@ -239,7 +242,7 @@ ORDER BY "pocet knih" DESC;
 ---vypis pro testovani explain plan 1
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 ----vytvoreni indexu
-CREATE INDEX "Orwell" ON "titul" ("autor");
+CREATE INDEX "autor_titul" ON "titul" ("autor");
 --- druhy pokus
  EXPLAIN PLAN FOR
 SELECT
@@ -351,7 +354,7 @@ VALUES ('2229','Josef','Lada',TO_DATE('1920-10-12', 'yyyy/mm/dd'),'bajky@seznam.
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
 VALUES ('1234',TO_DATE('2020-07-30', 'yyyy/mm/dd'),TO_DATE('2020-10-30', 'yyyy/mm/dd'),TO_DATE('2020-09-30', 'yyyy/mm/dd'),'0001','2222');
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
-VALUES ('1235',TO_DATE('2020-08-03', 'yyyy/mm/dd'),TO_DATE('2020-10-03', 'yyyy/mm/dd'),NULL,'0002','2223');
+VALUES ('1235',TO_DATE('2020-08-03', 'yyyy/mm/dd'),TO_DATE('2020-10-03', 'yyyy/mm/dd'),TO_DATE('2020-10-03', 'yyyy/mm/dd'),'0002','2223');
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
 VALUES ('1236',TO_DATE('2020-02-15', 'yyyy/mm/dd'),TO_DATE('2020-04-15', 'yyyy/mm/dd'),TO_DATE('2020-03-15', 'yyyy/mm/dd'),'0003','2224');
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
@@ -409,18 +412,20 @@ VALUES ('10000','8006');
 --SELECT * FROM "kniha";
 --SELECT * FROM "titul" JOIN "kniha" ON "titul"."id" = "kniha"."titul_id";
 
----DEMONSTRACE TRIGGER---
+--------------------------------------------------------
+----------------TRIGGERS DEMONSTRATION------------------
 INSERT INTO "vypujcka" ("id", "datum_vypujceni", "vratit_do", "datum_vraceni", "zamestnanec_id", "ctenar_id")
-VALUES ('1241',NULL,NULL,TO_DATE('2020-03-25', 'yyyy/mm/dd'),'0001','2225');
+VALUES ('1241',NULL,TO_DATE('2022-10-25', 'yyyy/mm/dd'),TO_DATE('2020-03-25', 'yyyy/mm/dd'),'0001','2225');
 INSERT INTO "kniha_vypujcka" ("kniha_id", "vypujcka_id")
 VALUES ('9999','1241');
 SELECT * FROM "vypujcka";
 --------------------------------------------------------------------------------------------------------
 
 
---------------------------- MATERIALIZED VIEW ----------------------------------
+---------------------------------------------------
+----------------MATERIALIZED VIEW------------------
 
--- Materializovaný pohled na všechny uživatele a počet jejich vypujcek.
+-- Materializovaný pohled na všechny ctenare co si nekdy vypujcili nejakou knihu.
 CREATE MATERIALIZED VIEW "ctenar_vypujcka_counter" AS
 SELECT
     "c"."id", "c"."jmeno", "c"."prijmeni" , "c"."email"
@@ -451,3 +456,4 @@ GRANT ALL ON "ctenar_vypujcka_counter" TO xmarek75;
 
 GRANT EXECUTE ON "vypujcene_knihy" TO xmarek75;
 GRANT EXECUTE ON "prumerny_pocet_vypujceni" TO xmarek75;
+------------------------------------------------------------------
