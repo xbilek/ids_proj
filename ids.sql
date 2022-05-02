@@ -10,6 +10,7 @@ DROP TABLE "zamestnanec";
 DROP TABLE "ctenar";
 DROP SEQUENCE "kniha_sekvence";
 DROP MATERIALIZED VIEW "ctenar_vypujcka_counter";
+DROP INDEX "Orwell";
 
 --------CREATE TABLES------------------
 CREATE TABLE "titul"
@@ -223,10 +224,34 @@ BEGIN
     "prumerny_pocet_vypujceni";
 end;
 
---- EXPLAIN PLAN TODO
---- kteri uzivatele s emailem @seznam.cz maji vice nez jednu vypujcku
-
-
+--- EXPLAIN PLAN
+--- vypise nazev titulu a k tomu pocet knih
+--- od autora George Orwella
+ EXPLAIN PLAN FOR
+SELECT
+    "titul"."id","nazev", COUNT("kniha"."id") AS "pocet knih"
+FROM
+    "titul"
+JOIN "kniha" ON "titul"."id" = "kniha"."titul_id"
+WHERE "autor" = 'George Orwell'
+GROUP BY "titul"."id","titul"."nazev"
+ORDER BY "pocet knih" DESC;
+---vypis pro testovani explain plan 1
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+----vytvoreni indexu
+CREATE INDEX "Orwell" ON "titul" ("autor");
+--- druhy pokus
+ EXPLAIN PLAN FOR
+SELECT
+    "titul"."id","nazev", COUNT("kniha"."id") AS "pocet knih"
+FROM
+    "titul"
+JOIN "kniha" ON "titul"."id" = "kniha"."titul_id"
+WHERE "autor" = 'George Orwell'
+GROUP BY "titul"."id","titul"."nazev"
+ORDER BY "pocet knih" DESC;
+---explain plan 2.pokus vypis
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 -------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------INSERTS----------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------
@@ -422,6 +447,7 @@ GRANT ALL ON "rezervace" TO xmarek75;
 GRANT ALL ON "kniha_rezervace" TO xmarek75;
 GRANT ALL ON "titul" TO xmarek75;
 
+GRANT ALL ON "ctenar_vypujcka_counter" TO xmarek75;
 
 GRANT EXECUTE ON "vypujcene_knihy" TO xmarek75;
 GRANT EXECUTE ON "prumerny_pocet_vypujceni" TO xmarek75;
